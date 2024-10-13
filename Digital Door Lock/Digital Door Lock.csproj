@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Digital_Door_Lock</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>locked.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resource\Images\gear-icon.png" />
+    <None Remove="Resource\Images\half locked - no light.png" />
+    <None Remove="Resource\Images\half locked.png" />
+    <None Remove="Resource\Images\locked.png" />
+    <None Remove="Resource\Images\question-icon.PNG" />
+    <None Remove="Resource\Images\Settings.png" />
+    <None Remove="Resource\Images\Unlocked.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AssemblyInfo.cs" />
+    <Resource Include="locked.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.42.3" />
+    <PackageReference Include="Microsoft.Azure.Devices.Shared" Version="1.30.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\Images\gear-icon.png" />
+    <Resource Include="Resource\Images\half locked - no light.png" />
+    <Resource Include="Resource\Images\half locked.png" />
+    <Resource Include="Resource\Images\locked.png" />
+    <Resource Include="Resource\Images\question-icon.PNG" />
+    <Resource Include="Resource\Images\Settings.png" />
+    <Resource Include="Resource\Images\Unlocked.png" />
+  </ItemGroup>
+
+</Project>
