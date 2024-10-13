@@ -7,21 +7,19 @@
         mc:Ignorable="d"
         Title="Settings" Height="630" Width="1164" ResizeMode="NoResize">
     <Canvas>
-        <TextBox x:Name="ConnectionStringTextBox" Canvas.Left="20" TextWrapping="Wrap" Canvas.Top="291" Width="964" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" Height="80"/>
+        <TextBox Text="{Binding ConnectionString, UpdateSourceTrigger=PropertyChanged}" x:Name="ConnectionStringTextBox" Canvas.Left="20" TextWrapping="Wrap" Canvas.Top="291" Width="964" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" Height="80"/>
         <Label Content="if the handle is in the middle and there is a red light on the lock - then it is locked&#xA;if the handle is down and a green light is on the lock - then it is unlocked&#xA;if the handle shakes and red light flashes - then you entered the wrong pin code" Canvas.Left="48" Canvas.Top="43" Height="97" Width="806" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Image x:Name="HelpImageBox" Height="30" Canvas.Left="1120" Canvas.Top="43" Width="30" Cursor="" Source="/Resource/Images/question-icon.PNG" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Rectangle Height="1" Canvas.Left="11" Stroke="Black" Canvas.Top="25" Width="1143" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Content="Set" Canvas.Left="1002" Canvas.Top="341" Height="30" Width="60" Click="SetNewConnectionString" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button x:Name="CopyConnectionString" Content="Copy" Canvas.Left="1002" Canvas.Top="291" Height="30" Width="59" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Button_Click" Cursor="Hand"/>
-        <TextBox x:Name="PrimaryConnectionStringTextbox" Canvas.Left="85" TextWrapping="Wrap" Canvas.Top="476" Width="985" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Text="HostName=AbdinIOThub.azure-devices.net;DeviceId=cec95419-748a-423a-a9ce-bc9f6c9e6e9a;SharedAccessKey=SeFps8MV4pTBV/5hrcsW28Nlz7/j934q0IiFTBU9XZw=" IsEnabled="False"/>
+        <Button Command="{Binding SetNewConnectionStringCommand}" Content="Set" Canvas.Left="1002" Canvas.Top="341" Height="30" Width="60"  Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button Command="{Binding CopyTextboxContentCommand}" x:Name="CopyTextboxContentButton" Content="Copy" Canvas.Left="1002" Canvas.Top="291" Height="30" Width="59" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand"/>
         <Label Height="36" Width="199" Content="Original connection string" Canvas.Left="451" Canvas.Top="433" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Rectangle Height="1" Canvas.Left="10" Stroke="Black" Canvas.Top="427" Width="1144" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Content="Copy" Canvas.Left="1085" Canvas.Top="474" HorizontalAlignment="Center" VerticalAlignment="Top" Width="38" Cursor="Hand" Click="CopyPrimaryConnectionString" Height="24"/>
         <Label Content="Primary" Canvas.Left="11" Canvas.Top="472" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Content="Secondary" Canvas.Left="11" Canvas.Top="498" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBox x:Name="SecondaryConnectionStringTextbox" Canvas.Left="85" TextWrapping="Wrap" Canvas.Top="502" Width="985" Height="22" Text="HostName=AbdinIOThub.azure-devices.net;DeviceId=cec95419-748a-423a-a9ce-bc9f6c9e6e9a;SharedAccessKey=dK5IfhX+skQesRbGEMrmqtafYSyOLkfm6ayp2kIp3jw=" IsEnabled="False" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Content="Copy" Canvas.Left="1085" Canvas.Top="501" Width="38" Cursor="Hand" Click="CopySecondaryConnectionString" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Rectangle Height="1" Canvas.Left="11" Stroke="Black" Canvas.Top="197" Width="1143" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Height="36" Width="199" Content="Update connection string" Canvas.Left="451" Canvas.Top="216" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="HostName=AbdinIOThub.azure-devices.net;DeviceId=cec95419-748a-423a-a9ce-bc9f6c9e6e9a;SharedAccessKey=SeFps8MV4pTBV/5hrcsW28Nlz7/j934q0IiFTBU9XZw=" Canvas.Left="88" Canvas.Top="472" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="HostName=AbdinIOThub.azure-devices.net;DeviceId=cec95419-748a-423a-a9ce-bc9f6c9e6e9a;SharedAccessKey=dK5IfhX+skQesRbGEMrmqtafYSyOLkfm6ayp2kIp3jw=" Canvas.Left="88" Canvas.Top="503"/>
     </Canvas>
 </Window>
