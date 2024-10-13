@@ -22,8 +22,15 @@ namespace Digital_Door_Lock.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+
+
+            string connectionString = "HostName=AbdinIOThub.azure-devices.net;DeviceId=cec95419-748a-423a-a9ce-bc9f6c9e6e9a;SharedAccessKey=SeFps8MV4pTBV/5hrcsW28Nlz7/j934q0IiFTBU9XZw=";
+            IoTHubService iotHubService = new IoTHubService(connectionString);
+
+
+            DataContext = new MainWindowViewModel(iotHubService);
         }
+
         private void codeenter(object sender, RoutedEventArgs e)
         {
             if (Display.Text.Length < 4)
@@ -37,13 +44,6 @@ namespace Digital_Door_Lock.Views
                     Display.Text = viewModel.TextBoxContent;
                 }
             }
-
-        }
-
-
-        private void Display_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -51,21 +51,52 @@ namespace Digital_Door_Lock.ViewModels
             }
         }
 
+        private string _CurrentPin;
+        public string CurrentPin
+        {
+            get { return _CurrentPin; }
+            set
+            {
+                _CurrentPin = value;
+                OnPropertyChanged("CurrentPin");
+            }
+        }
+
         private bool isDoorUnlocked = false;
 
         public ICommand LockUnlockCommand { get; }
         public ICommand ClearDisplayCommand { get; }
         public ICommand OpenSettingsCommand { get; }
-
-        public MainWindowViewModel()
+        private IoTHubService _iotHubService;
+        public MainWindowViewModel(IoTHubService iotHubService)
         {
+            _iotHubService = iotHubService;
             LockUnlockCommand = new RelayCommand(ExecuteLockUnlock);
             ClearDisplayCommand = new RelayCommand(ExecuteClearDisplay);
             OpenSettingsCommand = new RelayCommand(ExecuteOpenSettings);
-
+            DisplayPincode();
             LockImageSource = "../Resource/Images/Locked.png"; 
         }
+        private async void DisplayPincode()
+        {
+            try
+            {
 
+                var twin = await _iotHubService.GetDeviceTwinAsync();
+                if (twin != null && twin.Properties.Desired.Contains("pinCode"))
+                {
+                    CurrentPin = $"Pin code is: {twin.Properties.Desired["pinCode"].ToString()}";
+                }
+                else
+                {
+                    CurrentPin = "No PIN found";
+                }
+            }
+            catch (Exception ex)
+            {
+                CurrentPin = "Error retrieving PIN";
+            }
+        }
         private async void ExecuteLockUnlock(object sender)
         {
             IsButtonEnabled = false;
