@@ -33,6 +33,11 @@ namespace Digital_Door_Lock.Models
             return null;
         }
 
+        public async Task<string> GetDoorStateAsync()
+        {
+            return await _iotHubService.GetDoorStateAsync();
+        }
+
         public async Task<bool> ValidatePinAsync(string enteredPin)
         {
             var storedPin = await GetStoredPinAsync();
@@ -48,7 +53,7 @@ namespace Digital_Door_Lock.Models
         public async Task UnlockDoorAsync()
         {
             IsDoorUnlocked = true;
-            await _iotHubService.ReportDeviceStateAsync("Unlocked");
+            await _iotHubService.ReportDeviceStateAsync("Unlocked"); 
         }
     }
 }

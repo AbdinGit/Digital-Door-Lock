@@ -68,5 +68,6 @@
         <TextBox Text="{Binding TextBoxContent, UpdateSourceTrigger=propertyChanged}" x:Name="Display" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" BorderThickness="0,0,0,0" Background="#FF847C7C" Height="22" FontFamily="Arial" VerticalContentAlignment="Center" MaxLength="4" Foreground="White" IsEnabled="False" Canvas.Left="138" Canvas.Top="100"/>
         <Button Content="?" Canvas.Left="429" Canvas.Top="12" Height="50" Width="50" FontSize="30" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Command="{Binding OpenSettingsCommand}" Style="{StaticResource HoverButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.6,2.181"/>
         <Label  Content="{Binding CurrentPin}" x:Name="PincodeLabel" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" Height="27" VerticalAlignment="Center" Width="218"/>
+        <Button Command="{Binding RemovePropertiesCommand}" Content="Button" Canvas.Left="454" Canvas.Top="569"/>
     </Canvas>
 </Window>

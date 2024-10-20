@@ -23,7 +23,6 @@ namespace Digital_Door_Lock.Views
         {
             InitializeComponent();
 
-
             string connectionString = "HostName=AbdinIOThub.azure-devices.net;DeviceId=cec95419-748a-423a-a9ce-bc9f6c9e6e9a;SharedAccessKey=SeFps8MV4pTBV/5hrcsW28Nlz7/j934q0IiFTBU9XZw=";
             IoTHubService iotHubService = new IoTHubService(connectionString);
             DataContext = new MainWindowViewModel(iotHubService);

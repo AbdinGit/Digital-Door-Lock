@@ -19,15 +19,18 @@ namespace Digital_Door_Lock.ViewModels
         private bool _isButtonEnabled = true;
         private string _currentPin;
         private MainWindowModel _MainWindowModel;
-
+        private readonly IoTHubService _iotHubService;
         public MainWindowViewModel(IoTHubService iotHubService)
         {
             _MainWindowModel = new MainWindowModel(iotHubService);
             LockUnlockCommand = new RelayCommand(ExecuteLockUnlock);
             ClearDisplayCommand = new RelayCommand(ExecuteClearDisplay);
             OpenSettingsCommand = new RelayCommand(ExecuteOpenSettings);
+            RemovePropertiesCommand = new RelayCommand(ExecuteRemoveProperties);
             DisplayPincode();
             LockImageSource = "../Resource/Images/Locked.png";
+            _iotHubService = iotHubService;
+            _ = ListenForDoorStateUpdatesAsync();
         }
 
         public string LockImageSource
@@ -76,6 +79,7 @@ namespace Digital_Door_Lock.ViewModels
         public ICommand LockUnlockCommand { get; }
         public ICommand ClearDisplayCommand { get; }
         public ICommand OpenSettingsCommand { get; }
+        public ICommand RemovePropertiesCommand { get; }
 
         private async void DisplayPincode()
         {
@@ -90,34 +94,71 @@ namespace Digital_Door_Lock.ViewModels
             }
         }
 
+        private bool _isShaking = false;
+
+        private async Task ListenForDoorStateUpdatesAsync()
+        {
+            while (true)
+            {
+                if (!_isShaking)
+                {
+                    var doorState = await _MainWindowModel.GetDoorStateAsync();
+
+                    if (doorState == "Unlocked")
+                    {
+                        LockImageSource = "../Resource/Images/Unlocked.png";
+                    }
+                    else if (doorState == "Locked")
+                    {
+                        LockImageSource = "../Resource/Images/Locked.png";
+                    }
+                }
+                await Task.Delay(2000);
+            }
+        }
+
         private async void ExecuteLockUnlock(object sender)
         {
             IsButtonEnabled = false;
+            var doorState = await _MainWindowModel.GetDoorStateAsync();
 
-            if (_MainWindowModel.IsDoorUnlocked)
+            if (doorState == "Unlocked")
             {
-                LockImageSource = "../Resource/Images/Locked.png";
                 await _MainWindowModel.LockDoorAsync();
-                TextBoxContent = "door locked";
             }
             else
             {
                 bool isPinCorrect = await _MainWindowModel.ValidatePinAsync(TextBoxContent);
                 if (isPinCorrect)
                 {
-                    LockImageSource = "../Resource/Images/Unlocked.png";
+                    TextBoxContent = "";
                     await _MainWindowModel.UnlockDoorAsync();
-                    TextBoxContent = "door unlocked";
                 }
                 else
                 {
-                    StartShakingEffect();
-                    TextBoxContent = "wrong pincode";
+                    TextBoxContent = "";
+                    await _MainWindowModel.LockDoorAsync();
+                    await TriggerShakingEffectAsync();
                 }
             }
-
             await Task.Delay(3000);
             IsButtonEnabled = true;
+        }
+
+        private async Task TriggerShakingEffectAsync()
+        {
+            _isShaking = true; 
+
+            StartShakingEffect(); 
+
+            await Task.Delay(2000); 
+
+            _isShaking = false; 
+        }
+
+        private async void ExecuteRemoveProperties(object sender)
+        {
+            await _iotHubService.RemoveReportedPropertiesAsync("lockState", "pinCode");
         }
 
         private void ExecuteClearDisplay(object sender)
