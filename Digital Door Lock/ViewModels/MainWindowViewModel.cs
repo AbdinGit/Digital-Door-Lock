@@ -124,6 +124,7 @@ namespace Digital_Door_Lock.ViewModels
 
             if (doorState == "Unlocked")
             {
+                TextBoxContent = "";
                 await _MainWindowModel.LockDoorAsync();
             }
             else
